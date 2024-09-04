@@ -5,8 +5,8 @@ from test_api.checks import run_test, skip_test, format_err_msg
 #  their final character is the same or False if not
 
 
-def check_same_final_character():
-    pass
+def check_same_final_character(str1, str2):
+    return str1[-1] == str2[-1]
 
 
 @run_test
@@ -22,11 +22,11 @@ def test_check_same_final_character():
 # This function should take a string as an argument and return True if
 #  every letter is upper case and False if at least one character is not
 
-def is_all_upper_case():
-    pass
+def is_all_upper_case(string):
+    return string == string.upper()
 
 
-@skip_test
+@run_test
 def test_is_all_upper_case():
     assert is_all_upper_case("hello") is False, \
         format_err_msg(False, is_all_upper_case("hello"))
@@ -40,11 +40,11 @@ def test_is_all_upper_case():
 # This function should take a string as its argument and return a
 #  string consisting of all vowels found in the input (retaining the order)
 
-def collect_the_vowels(str):
-    pass
+def collect_the_vowels(string):
+    return ("").join([c for c in string if c in "aeiouAEIOU"])
 
 
-@skip_test
+@run_test
 def test_collect_the_vowels():
     assert collect_the_vowels("a") == "a", \
         format_err_msg('a', collect_the_vowels("a"))
@@ -65,11 +65,11 @@ def test_collect_the_vowels():
 
 # For examples of this behaviour, look at the second group of tests below
 
-def access_item(list, index):
-    pass
+def access_item(lst, index):
+    return lst[index % len(lst)]
 
 
-@skip_test
+@run_test
 def test_access_item_retrieves_item_when_passed_index_less_than_list_len():
     assert access_item(["a", "b", "c", "d"], 2) == "c", \
         format_err_msg("c", access_item(["a", "b", "c", "d"], 2))
@@ -79,7 +79,7 @@ def test_access_item_retrieves_item_when_passed_index_less_than_list_len():
         format_err_msg("d", access_item(["a", "b", "c", "d"], 3))
 
 
-@skip_test
+@run_test
 def test_access_item_retrieves_item_when_passed_index_greater_or_equal_to_list_len():
     assert access_item(["a", "b", "c", "d"], 4) == "a", \
         format_err_msg("a", access_item(["a", "b", "c", "d"], 4))
@@ -96,10 +96,20 @@ def test_access_item_retrieves_item_when_passed_index_greater_or_equal_to_list_l
 #  'lookup dictionary' might be useful here.
 
 def find_day_of_the_week(num):
-    pass
+    days = {
+        1: "Monday",
+        2: "Tuesday",
+        3: "Wednesday",
+        4: "Thursday",
+        5: "Friday",
+        6: "Saturday",
+        7: "Sunday"
+    }
+
+    return days[num]
 
 
-@skip_test
+@run_test
 def test_find_day_of_the_week():
     assert find_day_of_the_week(3) == "Wednesday", \
         format_err_msg('Wednesday', find_day_of_the_week(3))
@@ -113,11 +123,12 @@ def test_find_day_of_the_week():
 # This function should take two numbers, a and b, and return a string
 #  representing the value of a as a percentage of b
 
-def create_percentage():
-    pass
+def create_percentage(a, b):
+    percentage = round((a / b) * 100)
+    return f"{percentage}%"
 
 
-@skip_test
+@run_test
 def test_create_percentage():
     assert create_percentage(1, 2) == "50%", \
         format_err_msg("50%", create_percentage(1, 2))
@@ -135,11 +146,13 @@ def test_create_percentage():
 # This function should take a string containing a number wrapped in a pair
 #  of round brackets and return said number
 
-def extract_number():
-    pass
+def extract_number(string):
+    opening_index = string.index("(")
+    closing_index = string.index(")")
+    return int(string[opening_index + 1: closing_index])
 
 
-@skip_test
+@run_test
 def test_extract_number():
     assert extract_number("lasjdasasj(1)asljdlajk") == 1, \
         format_err_msg(1, extract_number("lasjdasasj(1)asljdlajk"))
