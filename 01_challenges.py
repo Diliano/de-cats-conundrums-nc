@@ -6,8 +6,8 @@ from test_api.checks import run_test, skip_test, format_err_msg
 # return this newly created string
 
 
-def connect_strings():
-    pass
+def connect_strings(str1, str2):
+    return f"{str1} {str2}"
 
 
 @run_test
@@ -24,11 +24,11 @@ def test_connect_strings():
 # This function should take a string as an argument and return a boolean
 #  based on whether the word given ends with 'ing'
 
-def check_word_ends_with_ing():
-    pass
+def check_word_ends_with_ing(string):
+    return string.endswith("ing")
 
 
-@skip_test
+@run_test
 def test_check_word_ends_with_ing():
     assert check_word_ends_with_ing("doing") is True, \
         format_err_msg(True, check_word_ends_with_ing("doing"))
@@ -46,11 +46,15 @@ def test_check_word_ends_with_ing():
 # if the string doesn't end with punctuation, return the string with a
 #  full-stop added at the end. Otherwise, return the string unchanged
 
-def add_missing_punctuation():
-    pass
+def add_missing_punctuation(string):
+    endings = {".", "!", "?"}
+    if string[-1] in endings:
+        return string
+    else:
+        return f"{string}."
 
 
-@skip_test
+@run_test
 def test_add_missing_punctuation():
     assert add_missing_punctuation("Hello there!") == "Hello there!", \
         format_err_msg("Hello there!", add_missing_punctuation("Hello there!"))
@@ -68,11 +72,11 @@ def test_add_missing_punctuation():
 # This function should take two arguments a and b, and return the remainder
 #  of the division of a / b
 
-def get_remainder():
-    pass
+def get_remainder(a, b):
+    return a % b
 
 
-@skip_test
+@run_test
 def test_get_remainder():
     assert get_remainder(10, 2) == 0, format_err_msg(0, get_remainder(10, 2))
     assert get_remainder(119, 10) == 9, \
@@ -87,10 +91,12 @@ def test_get_remainder():
 #  string of "property not found"
 
 def access_object(obj, key):
-    pass
+    if key in obj:
+        return obj[key]
+    else:
+        return "property not found"
 
-
-@skip_test
+@run_test
 def test_access_object():
     assert access_object({"name": "nara", "age": 5}, "name") == "nara", \
         format_err_msg("nara", access_object(
@@ -111,10 +117,10 @@ def test_access_object():
 #  either side of them
 
 def make_all_words_bold(str_list):
-    pass
+    return [f"**{string}**" for string in str_list]
 
 
-@skip_test
+@run_test
 def test_make_all_words_bold():
     assert make_all_words_bold(["hello", "there", "world"]) == [
         "**hello**", "**there**", "**world**"], \
@@ -127,10 +133,10 @@ def test_make_all_words_bold():
 # This function should take a list of numbers as an argument and return an
 #  list containing all positive numbers from the input (retaining the order)
 def get_positive_numbers(num_list):
-    pass
+    return [num for num in num_list if num > 0]
 
 
-@skip_test
+@run_test
 def test_get_positive_numbers():
     assert get_positive_numbers([1, -1, 2, -2, 3, -3]) == [1, 2, 3], \
         format_err_msg([1, 2, 3], get_positive_numbers([1, -1, 2, -2, 3, -3]))
