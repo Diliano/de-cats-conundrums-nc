@@ -10,7 +10,16 @@ from test_api.checks import run_test, skip_test, format_err_msg
 
 
 def counter_spy(people):
-    pass
+    result = []
+    spy_chars = {"s", "S", "p", "P", "y", "Y"}
+
+    for person in people:
+        is_spy = any(c in spy_chars for c in person)
+        if not is_spy:
+            result.append(person)
+
+    return sorted(result)
+    
 
 
 @run_test
@@ -19,7 +28,7 @@ def test_counter_spy_returns_an_empty_list_if_the_only_person_is_a_spy():
         [], counter_spy(['Simon']))
 
 
-@skip_test
+@run_test
 def test_counter_spy_returns_a_list_with_all_spies_removed():
     assert counter_spy(['Simon', 'Cat', 'Kyle']) == ['Cat'], \
         format_err_msg(['Cat'], counter_spy(['Simon', 'Cat', 'Kyle']))
@@ -35,7 +44,7 @@ def test_counter_spy_returns_a_list_with_all_spies_removed():
 #  order, for spy filing purposes.
 # So if you could do that you'd really be saving them a lot of work. Thanks.
 
-@skip_test
+@run_test
 def test_counter_spy_returns_a_list_with_names_in_alphabetical_order():
     assert counter_spy(['Simon', 'Cat', 'Kyle', 'Danika', 'Alex', 'Chon']) == [
         'Alex', 'Cat', 'Chon', 'Danika'], \
