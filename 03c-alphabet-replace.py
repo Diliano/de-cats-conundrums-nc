@@ -8,7 +8,7 @@ from test_api.checks import run_test, skip_test, format_err_msg
 
 
 def alphabet_replace(string):
-    pass
+    return (" ").join([str(ord(c) - 96) for c in string.lower().replace(" ", "")])
 
 
 @run_test
@@ -17,14 +17,14 @@ def test_alphabet_replace_returns_the_letters_in_a_single_word_with_codes():
         format_err_msg("3 15 4 5", alphabet_replace("code"))
 
 
-@skip_test
+@run_test
 def test_alphabet_replace_is_case_insensitive():
     assert alphabet_replace("Northcoders") == "14 15 18 20 8 3 15 4 5 18 19", \
         format_err_msg("14 15 18 20 8 3 15 4 5 18 19",
                        alphabet_replace("Northcoders"))
 
 
-@skip_test
+@run_test
 def test_alphabet_replace_ignores_spaces_between_words():
     assert alphabet_replace("expert programming") == \
         "5 24 16 5 18 20 16 18 15 7 18 1 13 13 9 14 7", \
