@@ -9,9 +9,12 @@ from test_api.checks import run_test, skip_test, format_err_msg
 #  always have exactly one letter missing. The length of the list will always
 #  be at least 2. The list will always contain letters in only one case.
 
-
 def find_missing_letter(letters):
-    pass
+    for i in range(1, len(letters)):
+        if ord(letters[i - 1]) + 1 != ord(letters[i]):
+            return chr(ord(letters[i]) - 1)
+    return ""
+
 
 
 @run_test
@@ -20,13 +23,13 @@ def test_find_missing_letter_returns_an_empty_string_if_no_letters_are_missing()
         format_err_msg('', find_missing_letter(["A", "B", "C", "D", "E"]))
 
 
-@skip_test
+@run_test
 def test_find_missing_letter_returns_a_missing_capital_letter():
     assert find_missing_letter(["A", "B", "C", "E"]) == "D", \
         format_err_msg('D', find_missing_letter(["A", "B", "C", "E"]))
 
 
-@skip_test
+@run_test
 def test_find_missing_letter_returns_a_missing_lower_case_letter():
     assert find_missing_letter(["e", "f", "g", "i"]) == "h", \
         format_err_msg('h', find_missing_letter(["e", "f", "g", "i"]))
