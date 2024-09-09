@@ -33,8 +33,17 @@ from test_api.checks import run_test, skip_test, format_err_msg
 # }
 
 
-def group_by(list, key):
-    pass
+def group_by(lst, key):
+    locations = {
+        "manchester": [],
+        "york": [],
+        "leeds": []
+    }
+
+    for person in lst:
+        locations[person["location"]].append(person)
+
+    return locations
 
 
 @run_test
