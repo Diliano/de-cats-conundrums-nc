@@ -16,10 +16,25 @@ from test_api.checks import run_test, skip_test, format_err_msg
 # Here we fold the 1st with the last and the second with the 4th. As it is
 #  odd in length, the middle index is not folded
 
-
 def fold_list(list_to_fold, fold_count):
-    pass
+    result = list_to_fold
 
+    for i in range(fold_count):
+        temp_result = []
+
+        length = len(result)
+
+        if length % 2 == 0:
+            for i in range(length // 2):
+                temp_result.append(result[i] + result[::-1][i])
+        else:
+            for i in range(length // 2):
+                temp_result.append(result[i] + result[::-1][i])
+            temp_result.append(result[length // 2])
+        
+        result = temp_result
+
+    return result
 
 @run_test
 def test_fold_list_folds_an_even_length_list():
@@ -29,25 +44,25 @@ def test_fold_list_folds_an_even_length_list():
         format_err_msg([101, 36, 13], fold_list([1, 2, 3, 10, 34, 100], 1))
 
 
-@skip_test
+@run_test
 def test_fold_list_folds_an_odd_length_list():
     assert fold_list([1, 2, 3], 1) == [4, 2], \
         format_err_msg([4, 2], fold_list([1, 2, 3], 1))
 
 
-@skip_test
+@run_test
 def test_fold_list_folds_an_even_length_list_multiple_times():
     assert fold_list([1, 2, 3, 10, 34, 100], 2) == [114, 36], \
         format_err_msg([114, 36], fold_list([1, 2, 3, 10, 34, 100], 2))
 
 
-@skip_test
+@run_test
 def test_fold_list_folds_a_list_to_a_single_value():
     assert fold_list([1, 2, 3, 10, 34, 100], 3) == [150], \
         format_err_msg([150], fold_list([1, 2, 3, 10, 34, 100], 3))
 
 
-@skip_test
+@run_test
 def test_fold_list_returns_repeated_folds_remain_the_same():
     assert fold_list([1, 2, 3, 10, 34, 100], 4) == [150], \
         format_err_msg([150], fold_list([1, 2, 3, 10, 34, 100], 4))
