@@ -8,7 +8,7 @@ from test_api.checks import run_test, skip_test, format_err_msg
 
 
 def get_palindromes(word_list):
-    pass
+    return [word for word in word_list if word == word[::-1]]
 
 
 @run_test
@@ -16,7 +16,7 @@ def test_get_palindromes_returns_empty_list_when_passed_empty_list():
     assert get_palindromes([]) == [], format_err_msg([], get_palindromes([]))
 
 
-@skip_test
+@run_test
 def test_get_palindromes_identifies_palindromes():
     assert get_palindromes(["racecar"]) == ["racecar"], \
         format_err_msg(["racecar"], get_palindromes(["racecar"]))
@@ -25,7 +25,7 @@ def test_get_palindromes_identifies_palindromes():
                        get_palindromes(["racecar", "racecar"]))
 
 
-@skip_test
+@run_test
 def test_get_palindromes_ignores_non_palindromes():
     assert get_palindromes(["racecar", "kayak", "tacocat"]) == \
         ["racecar", "kayak", "tacocat"], \
@@ -36,7 +36,7 @@ def test_get_palindromes_ignores_non_palindromes():
                        get_palindromes(["racecar"]))
 
 
-@skip_test
+@run_test
 def test_get_palindromes_returns_empty_list_when_passed_no_palindromes():
     assert get_palindromes(["pineapple", "watermelon", "pony"]) == [], \
         format_err_msg([], get_palindromes(
