@@ -1,3 +1,5 @@
-# de-cats-conudrums
+# Data Engineering Bootcamp - Problem Solving
 
-Instructions for this repo can be found at: https://l2c.northcoders.com/courses/de2-intro/problem-solving
+## Overview
+
+This repository contains work completed as part of the Problem Solving Sprint during my Data Engineering Bootcamp. 
